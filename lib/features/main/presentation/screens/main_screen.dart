@@ -240,6 +240,7 @@ class MainScreen extends StatelessWidget {
     imageController.projectImage.value = null;
     _projectNameController.clear();
     _projectDescriptionController.clear();
+    _projectUrlController.clear();
 
     return Get.bottomSheet(
       backgroundColor: MyColors.myDark,
