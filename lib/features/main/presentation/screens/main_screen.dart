@@ -453,6 +453,7 @@ class MainScreen extends StatelessWidget {
         'name': _projectNameController.text,
         'description': _projectDescriptionController.text,
         'image_url': imageUrl,
+        'url': _projectUrlController.text,
         'time': Timestamp.now(),
       }).then((value) {
         imageController.projectsIsLoading.value = false;
