@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/colors.dart';
+import '../../business_logic/skills_controller.dart';
 
 class SkillsItem extends StatelessWidget {
-  const SkillsItem({
+  SkillsItem({
     super.key,
     required this.title,
     required this.index,
@@ -18,6 +19,8 @@ class SkillsItem extends StatelessWidget {
   final int index;
   final String image;
   final String docId;
+
+  final SkillsController skillsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,8 @@ class SkillsItem extends StatelessWidget {
           FirebaseStorage.instance.ref().child('skills/$docId');
 
       await imageReference.delete();
+
+      skillsController.getSkills();
 
       Get.back();
       Get.rawSnackbar(

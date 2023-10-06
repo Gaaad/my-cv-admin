@@ -12,7 +12,9 @@ import '../../../../core/widgets/custom_image_picker.dart';
 import '../../../../core/widgets/custom_spacer.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/expandable_fab.dart';
+import '../../../projects/business_logic/projects_controller.dart';
 import '../../../projects/presentation/screens/projects.dart';
+import '../../../skills/business_logic/skills_controller.dart';
 import '../../../skills/presentation/screens/skills.dart';
 import '../../business_logic/image_controller.dart';
 import '../../business_logic/nav_bar_controller.dart';
@@ -28,6 +30,9 @@ class MainScreen extends StatelessWidget {
   final navBarController = Get.put(NavbarController());
 
   final imageController = Get.put(ImageController());
+
+  final SkillsController skillsController = Get.find();
+  final ProjectController projectController = Get.find();
 
   final _skillFormKey = GlobalKey<FormState>();
   final _projectFormKey = GlobalKey<FormState>();
@@ -421,6 +426,7 @@ class MainScreen extends StatelessWidget {
         'image_url': imageUrl,
         'time': Timestamp.now(),
       }).then((value) {
+        skillsController.getSkills();
         imageController.skillIsLoading.value = false;
         Get.back();
         Get.rawSnackbar(
@@ -457,6 +463,7 @@ class MainScreen extends StatelessWidget {
         'url': _projectUrlController.text,
         'time': Timestamp.now(),
       }).then((value) {
+        projectController.getProjects();
         imageController.projectsIsLoading.value = false;
         Get.back();
         Get.rawSnackbar(

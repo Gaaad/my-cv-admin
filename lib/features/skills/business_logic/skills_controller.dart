@@ -1,19 +1,20 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:my_cvv/features/skills/data/models/skill.dart';
 
 import 'package:my_cvv/features/skills/data/repository/skill_repo.dart';
 
 class SkillsController extends GetxController {
-  SkillsController({required this.skillRepository});
+  SkillsController({required this.skillRepository}) {
+    getSkills();
+  }
   SkillRepository skillRepository;
-  List<Skill>? skills;
+  RxList<Skill> skills = List<Skill>.empty().obs;
+  RxBool isLoading = true.obs;
 
-  List<Skill> getSkills() {
-    skillRepository.getSkills().then((skills) {
-      this.skills = skills;
-      update();
+  void getSkills() async {
+    await skillRepository.getSkills().then((data) {
+      isLoading.value = false;
+      skills.value = data;
     });
-    return skills ?? List.empty();
   }
 }

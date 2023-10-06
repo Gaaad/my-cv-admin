@@ -6,9 +6,10 @@ import 'package:get/get.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_spacer.dart';
+import '../../business_logic/projects_controller.dart';
 
 class ProjectItem extends StatelessWidget {
-  const ProjectItem({
+  ProjectItem({
     super.key,
     required this.image,
     required this.name,
@@ -17,6 +18,8 @@ class ProjectItem extends StatelessWidget {
   });
 
   final String image, name, description, docId;
+
+  final ProjectController projectController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,8 @@ class ProjectItem extends StatelessWidget {
           FirebaseStorage.instance.ref().child('projects/$docId');
 
       await imageReference.delete();
+
+      projectController.getProjects();
 
       Get.back();
       Get.rawSnackbar(

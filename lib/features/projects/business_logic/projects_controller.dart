@@ -4,15 +4,17 @@ import 'package:my_cvv/features/projects/data/models/project.dart';
 import 'package:my_cvv/features/projects/data/repository/project_repo.dart';
 
 class ProjectController extends GetxController {
-  ProjectController({required this.projectRepository});
+  ProjectController({required this.projectRepository}) {
+    getProjects();
+  }
   ProjectRepository projectRepository;
-  List<Project>? projects;
+  RxList<Project> projects = List<Project>.empty().obs;
+  RxBool isLoading = true.obs;
 
-  List<Project> getProjects() {
-    projectRepository.getProjects().then((projects) {
-      this.projects = projects;
-      update();
+  void getProjects() {
+    projectRepository.getProjects().then((data) {
+      isLoading.value = false;
+      projects.value = data;
     });
-    return projects ?? List.empty();
   }
 }
